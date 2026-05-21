@@ -3,10 +3,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage, LANGUAGES } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
-import { Globe, Menu, X, Link as LinkIcon, LogOut } from "lucide-react";
+import { Globe, Menu, X, Link as LinkIcon, LogOut, Code2, PackageOpen } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 export function Navbar() {
   const { user, logout } = useAuth();
@@ -19,6 +20,7 @@ export function Navbar() {
   const links = [
     { href: "/dashboard", label: "nav.dashboard" },
     { href: "/markets", label: "nav.markets" },
+    { href: "/packages", label: "Packages" },
     { href: "/portfolio", label: "nav.portfolio" },
     { href: "/calculator", label: "nav.calculator" },
     { href: "/support", label: "nav.support" },
@@ -68,7 +70,7 @@ export function Navbar() {
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full" data-testid="button-user-menu">
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-primary/20 text-primary text-xs font-medium">
                       {user.name.substring(0, 2).toUpperCase()}
@@ -76,7 +78,7 @@ export function Navbar() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 bg-popover/90 backdrop-blur-md">
+              <DropdownMenuContent align="end" className="w-64 bg-popover/90 backdrop-blur-md">
                 <div className="flex items-center justify-start gap-2 p-2">
                   <div className="flex flex-col space-y-1 leading-none">
                     <p className="font-medium">{user.name}</p>
@@ -86,7 +88,33 @@ export function Navbar() {
                   </div>
                 </div>
                 <DropdownMenuSeparator className="bg-white/10" />
-                <DropdownMenuItem onClick={logout} className="text-red-400 focus:text-red-400 cursor-pointer">
+                <Link href="/packages">
+                  <DropdownMenuItem className="cursor-pointer" data-testid="menu-packages">
+                    <PackageOpen className="mr-2 h-4 w-4 text-yellow-400" />
+                    <span>Investment Packages</span>
+                    <Badge className="ml-auto bg-yellow-400/10 text-yellow-400 border-yellow-400/20 text-[10px] px-1.5">New</Badge>
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator className="bg-white/10" />
+                <div className="px-2 py-1.5">
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Developer</p>
+                  <Link href="/developer">
+                    <DropdownMenuItem className="cursor-pointer rounded-lg" data-testid="menu-developer">
+                      <div className="flex items-center gap-2 flex-1">
+                        <div className="w-7 h-7 rounded-md bg-accent/20 flex items-center justify-center text-accent shrink-0">
+                          <Code2 className="w-3.5 h-3.5" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium">Andrea Donato</div>
+                          <div className="text-[10px] text-muted-foreground">Platform Developer</div>
+                        </div>
+                        <Globe className="ml-auto h-3.5 w-3.5 text-muted-foreground" />
+                      </div>
+                    </DropdownMenuItem>
+                  </Link>
+                </div>
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem onClick={logout} className="text-red-400 focus:text-red-400 cursor-pointer" data-testid="menu-logout">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>

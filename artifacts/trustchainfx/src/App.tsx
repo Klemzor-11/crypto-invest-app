@@ -18,6 +18,8 @@ import MarketsPage from "@/pages/MarketsPage";
 import PortfolioPage from "@/pages/PortfolioPage";
 import CalculatorPage from "@/pages/CalculatorPage";
 import SupportPage from "@/pages/SupportPage";
+import PackagesPage from "@/pages/PackagesPage";
+import DeveloperPage from "@/pages/DeveloperPage";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ function Router() {
         <Route path="/portfolio" component={() => <><Navbar /><PortfolioPage /></>} />
         <Route path="/calculator" component={() => <><Navbar /><CalculatorPage /></>} />
         <Route path="/support" component={() => <><Navbar /><SupportPage /></>} />
+        <Route path="/packages" component={() => <><Navbar /><PackagesPage /></>} />
+        <Route path="/developer" component={() => <><Navbar /><DeveloperPage /></>} />
         
         {/* Default route redirect to login/dashboard handled by AuthGuard implicitly if root is accessed */}
         <Route path="/" component={() => {
